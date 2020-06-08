@@ -1,17 +1,17 @@
 package matrix_test
 
 import (
-	"matrix"
+	. "github.com/jmpargana/matrix"
 	"testing"
 )
 
 func TestAddScalarMethod(t *testing.T) {
 	for _, test := range addScalarMatrices {
-		mat := matrix.NewFrom(test.in)
-		expected := matrix.NewFrom(test.out)
+		mat := NewFrom(test.in)
+		expected := NewFrom(test.out)
 		mat.AddScalar(test.step)
 
-		if !matrix.Equal(mat, expected) {
+		if !Equal(mat, expected) {
 			t.Errorf("add function didn't work. expected: %v, got: %v", expected, mat)
 		}
 	}
@@ -19,11 +19,11 @@ func TestAddScalarMethod(t *testing.T) {
 
 func TestInvalidAddScalarMethod(t *testing.T) {
 	for _, test := range invalidAddScalarMatrices {
-		mat := matrix.NewFrom(test.in)
-		expected := matrix.NewFrom(test.out)
+		mat := NewFrom(test.in)
+		expected := NewFrom(test.out)
 		mat.AddScalar(test.step)
 
-		if matrix.Equal(mat, expected) {
+		if Equal(mat, expected) {
 			t.Errorf("add function didn't work. expected: %v, got: %v", expected, mat)
 		}
 	}
@@ -31,11 +31,11 @@ func TestInvalidAddScalarMethod(t *testing.T) {
 
 func TestMultScalarMethod(t *testing.T) {
 	for _, test := range multScalarMatrices {
-		mat := matrix.NewFrom(test.in)
-		expected := matrix.NewFrom(test.out)
+		mat := NewFrom(test.in)
+		expected := NewFrom(test.out)
 		mat.MultScalar(test.step)
 
-		if !matrix.Equal(mat, expected) {
+		if !Equal(mat, expected) {
 			t.Errorf("mult function didn't work. expected: %v, got: %v", expected, mat)
 		}
 	}
@@ -43,11 +43,11 @@ func TestMultScalarMethod(t *testing.T) {
 
 func TestInvalidMultScalarMethod(t *testing.T) {
 	for _, test := range invalidMultScalarMatrices {
-		mat := matrix.NewFrom(test.in)
-		expected := matrix.NewFrom(test.out)
+		mat := NewFrom(test.in)
+		expected := NewFrom(test.out)
 		mat.MultScalar(test.step)
 
-		if matrix.Equal(mat, expected) {
+		if Equal(mat, expected) {
 			t.Errorf("mult function didn't work. expected: %v, got: %v", expected, mat)
 		}
 	}
@@ -55,7 +55,7 @@ func TestInvalidMultScalarMethod(t *testing.T) {
 
 func TestEqualMethod(t *testing.T) {
 	for _, mat := range equalMatrices {
-		rhs, lhs := matrix.NewFrom(mat.rhs), matrix.NewFrom(mat.lhs)
+		rhs, lhs := NewFrom(mat.rhs), NewFrom(mat.lhs)
 		if !rhs.Equal(lhs) {
 			t.Errorf("%v should be equal to %v", rhs, lhs)
 		}
@@ -96,7 +96,7 @@ func TestEqualMethod2(t *testing.T) {
 
 func TestUnequalMethod(t *testing.T) {
 	for _, mat := range unequalMatrices {
-		rhs, lhs := matrix.NewFrom(mat.rhs), matrix.NewFrom(mat.lhs)
+		rhs, lhs := NewFrom(mat.rhs), NewFrom(mat.lhs)
 		if rhs.Equal(lhs) {
 			t.Errorf("%v should not be equal to %v", rhs, lhs)
 		}
@@ -104,7 +104,7 @@ func TestUnequalMethod(t *testing.T) {
 }
 
 func TestUnequalElems(t *testing.T) {
-	a, b := matrix.New(4, 4), matrix.New(4, 4)
+	a, b := New(4, 4), New(4, 4)
 	b.Set(1, 1, 1.00)
 
 	if a.Equal(b) {
@@ -113,7 +113,7 @@ func TestUnequalElems(t *testing.T) {
 }
 
 func TestAddScalarMethod2(t *testing.T) {
-	a, b := matrix.New(3, 4), matrix.New(3, 4)
+	a, b := New(3, 4), New(3, 4)
 	a.AddScalar(1)
 	a.AddScalar(1)
 	b.AddScalar(2)
@@ -123,7 +123,7 @@ func TestAddScalarMethod2(t *testing.T) {
 }
 
 func TestMultScalarMethod2(t *testing.T) {
-	a, b := matrix.New(1, 4), matrix.New(1, 4)
+	a, b := New(1, 4), New(1, 4)
 	a.AddScalar(2)
 	a.MultScalar(2)
 	b.AddScalar(4)
@@ -133,7 +133,7 @@ func TestMultScalarMethod2(t *testing.T) {
 }
 
 func TestFailAddMethod1(t *testing.T) {
-	a, b := matrix.New(3, 3), matrix.New(3, 4)
+	a, b := New(3, 3), New(3, 4)
 	err := a.Add(b)
 	if err == nil {
 		t.Errorf("should not be able to add %v to %v", a, b)
@@ -141,14 +141,14 @@ func TestFailAddMethod1(t *testing.T) {
 }
 
 func TestFailSubMethod2(t *testing.T) {
-	a, b := matrix.New(4, 4), matrix.New(3, 4)
+	a, b := New(4, 4), New(3, 4)
 	err := a.Sub(b)
 	if err == nil {
 		t.Errorf("should not be able to subtract %v from %v", a, b)
 	}
 }
 func TestFailAddMethod(t *testing.T) {
-	a, b, c := matrix.New(3, 4), matrix.New(3, 4), matrix.New(3, 4)
+	a, b, c := New(3, 4), New(3, 4), New(3, 4)
 	a.AddScalar(1)
 	b.AddScalar(1)
 	a.Add(b)
@@ -159,7 +159,7 @@ func TestFailAddMethod(t *testing.T) {
 }
 
 func TestFailSubMethod(t *testing.T) {
-	a, b, c := matrix.New(3, 4), matrix.New(3, 4), matrix.New(3, 4)
+	a, b, c := New(3, 4), New(3, 4), New(3, 4)
 	a.AddScalar(1)
 	b.AddScalar(-1)
 	a.Sub(b)
@@ -170,7 +170,7 @@ func TestFailSubMethod(t *testing.T) {
 }
 
 func TestAddMethod(t *testing.T) {
-	a, b, c := matrix.New(3, 4), matrix.New(3, 4), matrix.New(3, 4)
+	a, b, c := New(3, 4), New(3, 4), New(3, 4)
 	a.AddScalar(1)
 	b.AddScalar(-1)
 	a.Add(b)
@@ -181,7 +181,7 @@ func TestAddMethod(t *testing.T) {
 }
 
 func TestSubMethod(t *testing.T) {
-	a, b, c := matrix.New(3, 4), matrix.New(3, 4), matrix.New(3, 4)
+	a, b, c := New(3, 4), New(3, 4), New(3, 4)
 	a.AddScalar(1)
 	b.AddScalar(1)
 	a.Sub(b)
@@ -192,7 +192,7 @@ func TestSubMethod(t *testing.T) {
 }
 
 func TestMultMethodFail(t *testing.T) {
-	a, b := matrix.New(4, 3), matrix.New(4, 3)
+	a, b := New(4, 3), New(4, 3)
 	err := a.Mult(b)
 	if err == nil {
 		t.Errorf("should be able to multiply %v with %v", a, b)
@@ -200,7 +200,7 @@ func TestMultMethodFail(t *testing.T) {
 }
 
 func TestMultMethodFail2(t *testing.T) {
-	a, b := matrix.New(4, 2), matrix.New(4, 3)
+	a, b := New(4, 2), New(4, 3)
 	err := a.Mult(b)
 	if err == nil {
 		t.Errorf("should be able to multiply %v with %v", a, b)
@@ -208,7 +208,7 @@ func TestMultMethodFail2(t *testing.T) {
 }
 
 func TestIsSquare(t *testing.T) {
-	a, b := matrix.New(4, 4), matrix.New(2, 3)
+	a, b := New(4, 4), New(2, 3)
 	if !a.IsSquare() {
 		t.Errorf("%v should be square", a)
 	}
@@ -218,7 +218,7 @@ func TestIsSquare(t *testing.T) {
 }
 
 func TestMultMethod(t *testing.T) {
-	a, b, c := matrix.New(4, 4), matrix.New(4, 4), matrix.New(4, 4)
+	a, b, c := New(4, 4), New(4, 4), New(4, 4)
 	a.AddScalar(1)
 	b.AddScalar(1)
 	c.AddScalar(4)
@@ -231,8 +231,8 @@ func TestMultMethod(t *testing.T) {
 
 func TestTransMethod(t *testing.T) {
 	for _, mats := range transposed {
-		rhs := matrix.NewFrom(mats.rhs)
-		lhs := matrix.NewFrom(mats.lhs)
+		rhs := NewFrom(mats.rhs)
+		lhs := NewFrom(mats.lhs)
 		rhs.Trans()
 
 		if !rhs.Equal(lhs) {

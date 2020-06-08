@@ -1,13 +1,13 @@
 package matrix_test
 
 import (
-	"matrix"
+	. "github.com/jmpargana/matrix"
 	"testing"
 )
 
 func TestRow(t *testing.T) {
 	for _, mat := range rectMatrices {
-		m := matrix.NewFrom(mat)
+		m := NewFrom(mat)
 
 		for i := 0; i < m.NumRows; i++ {
 			row, err := m.Row(i)
@@ -24,7 +24,7 @@ func TestRow(t *testing.T) {
 
 func TestCol(t *testing.T) {
 	for _, mat := range rectMatrices {
-		m := matrix.NewFrom(mat)
+		m := NewFrom(mat)
 
 		for i := 0; i < m.NumCols; i++ {
 			tmpCol := make([]float64, 0, len(mat))
@@ -47,7 +47,7 @@ func TestCol(t *testing.T) {
 
 func TestInvalidIndexing(t *testing.T) {
 	for _, mat := range rectMatrices {
-		m := matrix.NewFrom(mat)
+		m := NewFrom(mat)
 
 		low := -1
 		highRow := m.NumRows
@@ -73,7 +73,7 @@ func TestInvalidIndexing(t *testing.T) {
 
 func TestGet(t *testing.T) {
 	for _, mat := range rectMatrices {
-		m := matrix.NewFrom(mat)
+		m := NewFrom(mat)
 
 		for row := range mat {
 			for col := range mat[row] {
@@ -92,7 +92,7 @@ func TestGet(t *testing.T) {
 
 func TestSet(t *testing.T) {
 	for _, mat := range rectMatrices {
-		m := matrix.NewFrom(mat)
+		m := NewFrom(mat)
 
 		for row := range mat {
 			for col := range mat[row] {
@@ -119,7 +119,7 @@ func TestSet(t *testing.T) {
 
 func TestInvalidGet(t *testing.T) {
 	for _, mat := range rectMatrices {
-		m := matrix.NewFrom(mat)
+		m := NewFrom(mat)
 
 		low := -1
 		highRow := m.NumRows
@@ -145,7 +145,7 @@ func TestInvalidGet(t *testing.T) {
 
 func TestInvalidSet(t *testing.T) {
 	for _, mat := range rectMatrices {
-		m := matrix.NewFrom(mat)
+		m := NewFrom(mat)
 
 		low := -1
 		highRow := m.NumRows
