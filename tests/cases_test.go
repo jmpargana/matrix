@@ -1,4 +1,6 @@
-package matrix
+package matrix_test
+
+import "matrix"
 
 type scalarStruct struct {
 	in   [][]float64
@@ -12,7 +14,7 @@ type compareMatrices struct {
 }
 
 type matrixOps struct {
-	a, b, c Matrix
+	a, b, c matrix.Matrix
 }
 
 var matrixSize = [...][]int{
@@ -323,24 +325,24 @@ var unequalMatrices = []compareMatrices{
 
 var moreEqual = []matrixOps{
 	{
-		New(4, 3),
-		New(4, 3),
-		New(4, 3),
+		matrix.New(4, 3),
+		matrix.New(4, 3),
+		matrix.New(4, 3),
 	},
 	{
-		New(2, 3),
-		New(2, 3),
-		New(2, 3),
+		matrix.New(2, 3),
+		matrix.New(2, 3),
+		matrix.New(2, 3),
 	},
 	{
-		New(3, 3),
-		New(3, 3),
-		New(3, 3),
+		matrix.New(3, 3),
+		matrix.New(3, 3),
+		matrix.New(3, 3),
 	},
 	{
-		New(4, 4),
-		New(4, 4),
-		New(4, 4),
+		matrix.New(4, 4),
+		matrix.New(4, 4),
+		matrix.New(4, 4),
 	},
 }
 

@@ -1,10 +1,13 @@
-package matrix
+package matrix_test
 
-import "testing"
+import (
+	"matrix"
+	"testing"
+)
 
 func TestValidSlices(t *testing.T) {
 	for _, ss := range validSlices {
-		m := NewFrom(ss)
+		m := matrix.NewFrom(ss)
 
 		if m.NumRows != len(ss) || m.NumCols != len(ss[0]) {
 			t.Errorf("invalid construction of %v", ss)
@@ -14,7 +17,7 @@ func TestValidSlices(t *testing.T) {
 
 func TestInvalidSlices(t *testing.T) {
 	for _, ss := range invalidSlices {
-		assertPanic(t, func() { NewFrom(ss) })
+		assertPanic(t, func() { matrix.NewFrom(ss) })
 	}
 }
 
@@ -22,10 +25,10 @@ func TestVectorToMatrixEven(t *testing.T) {
 	for _, v := range vectorToMatrixEven {
 		size := len(v)
 
-		var hori = NewFromVec(1, size, v)
-		var vert = NewFromVec(size, 1, v)
-		var rectH = NewFromVec(2, size/2, v)
-		var rectV = NewFromVec(size/2, 2, v)
+		var hori = matrix.NewFromVec(1, size, v)
+		var vert = matrix.NewFromVec(size, 1, v)
+		var rectH = matrix.NewFromVec(2, size/2, v)
+		var rectV = matrix.NewFromVec(size/2, 2, v)
 		_, _, _, _ = hori, vert, rectH, rectV
 	}
 }
@@ -34,49 +37,25 @@ func TestVectorToMatrix(t *testing.T) {
 	for _, v := range vectorToMatrixOdd {
 		size := len(v)
 
-		var validVecHorizontal = NewFromVec(1, size, v)
-		var validVecVertical = NewFromVec(size, 1, v)
+		var validVecHorizontal = matrix.NewFromVec(1, size, v)
+		var validVecVertical = matrix.NewFromVec(size, 1, v)
 		_, _ = validVecVertical, validVecHorizontal
 
-		assertPanic(t, func() { NewFromVec(size/2, 2, v) })
-		assertPanic(t, func() { NewFromVec(2, size/2, v) })
+		assertPanic(t, func() { matrix.NewFromVec(size/2, 2, v) })
+		assertPanic(t, func() { matrix.NewFromVec(2, size/2, v) })
 	}
 }
 
 func TestInvalidMatrixConstructors(t *testing.T) {
 	for _, m := range invalidMatrix {
 		rows, cols := m[0], m[1]
-		assertPanic(t, func() { New(rows, cols) })
+		assertPanic(t, func() { matrix.New(rows, cols) })
 
 		if rows < 1 {
-			assertPanic(t, func() { NewSquare(rows) })
+			assertPanic(t, func() { matrix.NewSquare(rows) })
 		}
 		if cols < 1 {
-			assertPanic(t, func() { NewSquare(cols) })
-		}
-	}
-}
-
-func TestMatrixStruct(t *testing.T) {
-	for _, mat := range matrixSize {
-		rows, cols := mat[0], mat[1]
-
-		var m = Matrix{
-			rows,
-			cols,
-			make([]float64, rows*cols),
-		}
-
-		if r := m.NumRows; r != rows {
-			t.Errorf("failed create struct with %d rows: %d", rows, r)
-		}
-
-		if c := m.NumCols; c != cols {
-			t.Errorf("failed to create struct with %d cols: %d", cols, c)
-		}
-
-		if s := len(m.data); s != rows*cols {
-			t.Errorf("failed to initialize empty vector with %d rows and %d cols: size = %d", rows, cols, s)
+			assertPanic(t, func() { matrix.NewSquare(cols) })
 		}
 	}
 }
@@ -85,7 +64,7 @@ func TestMatrixNew(t *testing.T) {
 	for i := range matrixSize {
 		rows, cols := matrixSize[i][0], matrixSize[i][1]
 
-		var m = New(rows, cols)
+		var m = matrix.New(rows, cols)
 
 		if r := m.NumRows; r != rows {
 			t.Errorf("failed create struct with %d rows: %d", rows, r)
@@ -94,10 +73,6 @@ func TestMatrixNew(t *testing.T) {
 		if c := m.NumCols; c != cols {
 			t.Errorf("failed to create struct with %d cols: %d", cols, c)
 		}
-
-		if s := len(m.data); s != rows*cols {
-			t.Errorf("failed to initialize empty vector with %d rows and %d cols: size = %d", rows, cols, s)
-		}
 	}
 }
 
@@ -105,7 +80,7 @@ func TestMatrixSquare(t *testing.T) {
 	for i := range matrixSize {
 		rows := matrixSize[i][0]
 
-		var m = NewSquare(rows)
+		var m = matrix.NewSquare(rows)
 
 		if r := m.NumRows; r != rows {
 			t.Errorf("failed create struct with %d rows: %d", rows, r)
@@ -113,10 +88,6 @@ func TestMatrixSquare(t *testing.T) {
 
 		if c := m.NumCols; c != rows {
 			t.Errorf("failed to create struct with %d cols: %d", rows, c)
-		}
-
-		if s := len(m.data); s != rows*rows {
-			t.Errorf("failed to initialize empty vector with %d rows and %d cols: size = %d", rows, rows, s)
 		}
 	}
 }
