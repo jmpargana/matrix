@@ -147,3 +147,31 @@ func TestMatMultVecTrans(t *testing.T) {
 		t.Errorf("expected:\n%vgot:\n%v", c, got)
 	}
 }
+
+func TestMatMultVec2(t *testing.T) {
+	a := NewFrom([][]float64{
+		{2, 4, 3, 4},
+		{3, 2, 2, 3},
+		{3, 1, -2, 3},
+	})
+	b := NewFrom([][]float64{
+		{2},
+		{-3},
+		{-1},
+		{3},
+	})
+	c := NewFrom([][]float64{
+		{1},
+		{7},
+		{14},
+	})
+
+	got, err := Mult(a, b)
+	if err != nil {
+		t.Errorf("shouldn't fail here: %v", err)
+	}
+
+	if !got.Equal(c) {
+		t.Errorf("\ngot:\n%vexpected:\n%v", got, c)
+	}
+}
