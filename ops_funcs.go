@@ -34,7 +34,7 @@ func Mult(lhs, rhs Matrix) (Matrix, error) {
 	if err := assertMatchingMult(lhs.NumCols, rhs.NumRows); err != nil {
 		return Matrix{}, err
 	}
-	result := New(rhs.NumCols, lhs.NumRows)
+	result := New(lhs.NumRows, rhs.NumCols)
 	wg := sync.WaitGroup{}
 
 	for row := 0; row < lhs.NumRows; row++ {

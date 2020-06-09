@@ -123,3 +123,27 @@ func TestTrans(t *testing.T) {
 		}
 	}
 }
+
+func TestMatMultVec(t *testing.T) {
+	a, b, c := New(5, 1), New(3, 5), New(3, 1)
+	a.AddScalar(1)
+	b.AddScalar(1)
+	c.AddScalar(5)
+
+	got, _ := Mult(b, a)
+	if !got.Equal(c) {
+		t.Errorf("expected:\n%vgot:\n%v", c, got)
+	}
+}
+
+func TestMatMultVecTrans(t *testing.T) {
+	a, b, c := New(1, 5), New(5, 3), New(1, 3)
+	a.AddScalar(1)
+	b.AddScalar(1)
+	c.AddScalar(5)
+
+	got, _ := Mult(a, b)
+	if !got.Equal(c) {
+		t.Errorf("expected:\n%vgot:\n%v", c, got)
+	}
+}
