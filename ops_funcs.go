@@ -1,6 +1,8 @@
 package matrix
 
-import "sync"
+import (
+	"sync"
+)
 
 func Add(lhs, rhs Matrix) (Matrix, error) {
 	if err := assertMatchingSizes(lhs.NumRows, lhs.NumCols, rhs.NumRows, lhs.NumCols); err != nil {
@@ -84,4 +86,21 @@ func Equal(rhs, lhs Matrix) bool {
 		}
 	}
 	return true
+}
+
+// HadamardProd performs the hadamard product of matrices.
+// It is an elementwise multiplication of each of the elements in both matrices,
+// therefore they must have the exact same dimensions.
+func HadamardProd(lhs, rhs Matrix) (Matrix, error) {
+	if err := assertMatchingSizes(lhs.NumRows, lhs.NumCols, rhs.NumRows, rhs.NumCols); err != nil {
+		return Matrix{}, err
+	}
+
+	data := make([]float64, lhs.NumRows*lhs.NumCols)
+
+	for i := range lhs.data {
+		data[i] = lhs.data[i] * rhs.data[i]
+	}
+
+	return NewFromVec(lhs.NumRows, lhs.NumCols, data), nil
 }

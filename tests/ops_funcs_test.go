@@ -1,8 +1,9 @@
 package matrix_test
 
 import (
-	. "github.com/jmpargana/matrix"
 	"testing"
+
+	. "github.com/jmpargana/matrix"
 )
 
 func TestUnequal(t *testing.T) {
@@ -173,5 +174,40 @@ func TestMatMultVec2(t *testing.T) {
 
 	if !got.Equal(c) {
 		t.Errorf("\ngot:\n%vexpected:\n%v", got, c)
+	}
+}
+
+func TestHadamardProd(t *testing.T) {
+	for _, mats := range hadamardProdTest {
+		a, b, c := NewFrom(mats.a), NewFrom(mats.b), NewFrom(mats.c)
+
+		got1, err := HadamardProd(a, b)
+		if err != nil {
+			t.Errorf("wasn't supposed to fail here: %v", err)
+		}
+
+		got2, err := HadamardProd(b, a)
+		if err != nil {
+			t.Errorf("wasn't supposed to fail here: %v", err)
+		}
+
+		if !Equal(c, got1) {
+			t.Errorf("got:\n%v\nexpected:\n%v\n", got1, c)
+		}
+
+		if !Equal(c, got2) {
+			t.Errorf("got:\n%v\nexpected:\n%v\n", got2, c)
+		}
+	}
+}
+
+func TestHadamardProdFail(t *testing.T) {
+	for _, mats := range hadamardProdTestInvalid {
+		a, b := NewFrom(mats.a), NewFrom(mats.b)
+
+		_, err := HadamardProd(a, b)
+		if err == nil {
+			t.Errorf("wasn supposed to fail here: %v", err)
+		}
 	}
 }
