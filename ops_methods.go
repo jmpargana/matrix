@@ -2,6 +2,7 @@ package matrix
 
 import (
 	"errors"
+	"fmt"
 	"sync"
 )
 
@@ -103,17 +104,20 @@ func (m *Matrix) Trans() error {
 // Equal compares the instance matrix with another.
 func (m *Matrix) Equal(other Matrix) bool {
 	if m.NumRows != other.NumRows || m.NumCols != other.NumCols {
+		fmt.Printf("A: %dx%d\nB: %dx%d\n", m.NumRows, m.NumCols, other.NumRows, other.NumCols)
 		return false
 	}
 
 	for i := range m.data {
 		if m.data[i] != other.data[i] {
+			fmt.Printf("%f != %f\n", m.data[i], other.data[i])
 			return false
 		}
 	}
 	return true
 }
 
+// IsSquare compares the number of columns with the number of rows.
 func (m *Matrix) IsSquare() bool {
 	return m.NumRows == m.NumCols
 }
