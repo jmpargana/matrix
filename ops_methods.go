@@ -110,6 +110,7 @@ func (m *Matrix) Equal(other Matrix) bool {
 
 	for i := range m.data {
 		if m.data[i] != other.data[i] {
+			fmt.Printf("%s\n!=\n%s", m, other)
 			fmt.Printf("%f != %f\n", m.data[i], other.data[i])
 			return false
 		}
