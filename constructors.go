@@ -23,7 +23,7 @@ func NewSquare(size int) Matrix {
 func NewRandom(rows, cols int) Matrix {
 	assertValidSize(rows, cols)
 
-	data := make([]float64, 0, rows*cols)
+	data := make([]float64, rows*cols)
 	gen := rand.New(rand.NewSource(time.Now().UnixNano()))
 
 	for i := range data {

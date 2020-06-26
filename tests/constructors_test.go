@@ -1,8 +1,10 @@
 package matrix_test
 
 import (
-	. "github.com/jmpargana/matrix"
 	"testing"
+
+	"github.com/jmpargana/matrix"
+	. "github.com/jmpargana/matrix"
 )
 
 func TestValidSlices(t *testing.T) {
@@ -89,5 +91,15 @@ func TestMatrixSquare(t *testing.T) {
 		if c := m.NumCols; c != rows {
 			t.Errorf("failed to create struct with %d cols: %d", rows, c)
 		}
+	}
+}
+
+func TestMatrixNewRandom(t *testing.T) {
+	mat := matrix.NewRandom(4, 10)
+	if mat.NumRows != 4 {
+		t.Errorf("wrong number of rows: got %d want %d", mat.NumRows, 4)
+	}
+	if mat.NumCols != 10 {
+		t.Errorf("wrong number of rows: got %d want %d", mat.NumCols, 10)
 	}
 }
