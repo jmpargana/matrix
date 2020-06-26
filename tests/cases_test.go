@@ -491,3 +491,31 @@ var hadamardProdTestInvalid = []matrixOpsFloats{
 		},
 	},
 }
+
+var encodingTestCases = map[string]struct {
+	m [][]float64
+}{
+	"vector of zeros": {[][]float64{
+		{0, 0, 0},
+	}},
+	"vector transposed": {[][]float64{
+		{0},
+		{0},
+		{0},
+		{0},
+	}},
+	"vector with vals": {[][]float64{
+		{2},
+		{0},
+		{0},
+		{1},
+	}},
+	"vector with vals transposed": {[][]float64{
+		{0, 2, 3, 0},
+	}},
+	"matrix": {[][]float64{
+		{0, 2, 3, 0},
+		{2, 2, 3, 0},
+		{1, 2, 3, 0},
+	}},
+}

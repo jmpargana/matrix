@@ -1,8 +1,10 @@
 package matrix_test
 
 import (
-	. "github.com/jmpargana/matrix"
 	"testing"
+
+	"github.com/jmpargana/matrix"
+	. "github.com/jmpargana/matrix"
 )
 
 func TestAddScalarMethod(t *testing.T) {
@@ -238,5 +240,28 @@ func TestTransMethod(t *testing.T) {
 		if !rhs.Equal(lhs) {
 			t.Errorf("%v should be the save as %v when transposed", rhs, lhs)
 		}
+	}
+}
+
+func TestEncodingDecoding(t *testing.T) {
+	for name, tc := range encodingTestCases {
+		t.Run(name, func(t *testing.T) {
+			m := matrix.NewFrom(tc.m)
+			mat := &matrix.Matrix{}
+
+			data, err := m.MarshalBinary()
+			if err != nil {
+				t.Errorf("failed encoding with: %v", err)
+			}
+
+			err = mat.UnmarshalBinary(data)
+			if err != nil {
+				t.Errorf("failed decoding with: %v", err)
+			}
+
+			if !m.Equal(*mat) {
+				t.Errorf("got\n%swant\n%s", mat, m)
+			}
+		})
 	}
 }

@@ -12,3 +12,11 @@ type Matrix struct {
 	NumCols int
 	data    []float64
 }
+
+// wrapMatrix is a wrapper that exposes all private member attributes of the
+// Matrix type. Is simplifies the implementation of MarshalBinary and UnmarshalBinary
+// since it recursively calls gob.Encode/Decode on the primitive types.
+type wrapMatrix struct {
+	NumRows, NumCols int
+	Data             []float64
+}
